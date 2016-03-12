@@ -297,6 +297,11 @@ ExtractTextPlugin.prototype.apply = function(compiler) {
 					});
 					var chunk = extractedChunk.originalChunk;
 					var source = this.renderExtractedChunk(extractedChunk);
+
+					if (this.postLoader) {
+						source = this.postLoader(source);
+					}
+
 					var file = compilation.getPath(filename, {
 						chunk: chunk
 					}).replace(/\[(?:(\w+):)?contenthash(?::([a-z]+\d*))?(?::(\d+))?\]/ig, function() {
