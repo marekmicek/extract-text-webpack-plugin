@@ -346,10 +346,14 @@ class ExtractTextPlugin {
             });
 
             const chunk = extractedChunk.originalChunk;
-            const source = ExtractTextPlugin.renderExtractedChunk(
+            let source = ExtractTextPlugin.renderExtractedChunk(
               compilation,
               extractedChunk
             );
+
+            if (this.postLoader) {
+              source = this.postLoader(source);
+            }
 
             if (!source.size()) {
               return;
